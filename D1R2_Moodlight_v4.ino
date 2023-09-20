@@ -41,8 +41,8 @@ const char* password = "";
 
 static bool now_state = false;
 
-const int debounceDelay = 50; // 디바운싱을 위한 시간 (50ms 정도로 설정)
-const unsigned long longPressDuration = 5000; // 5초 (5000ms) 동안 버튼이 눌리면 end를 출력
+const int debounceDelay = 50;
+const unsigned long longPressDuration = 5000;
 
 unsigned long lastDebounceTime = 0;
 bool lastButtonState = LOW;
@@ -248,13 +248,13 @@ void loop(){
         now_state = !now_state;
         next = millis();
         //Serial.println("button pressed");
-        buttonPressed = true; // 버튼이 눌렸음을 기록
+        buttonPressed = true; // 버튼이 눌렸음
         buttonPressedStartTime = millis(); // 버튼이 눌린 시작 시간 기록
       }
       else {
         // 버튼이 떨어진 경우
         if (buttonPressed) {
-          // 이전에 버튼이 눌린 상태였다면 버튼이 떨어진 시점을 확인
+          // 버튼이 눌린 상태였다면 버튼이 떨어진 시점 확인
           unsigned long buttonReleaseTime = millis();
           if (buttonReleaseTime - buttonPressedStartTime >= longPressDuration) {
             reset_board();
@@ -264,7 +264,7 @@ void loop(){
       }
     }
 
-    lastDebounceTime = millis(); // 디바운싱 시간 갱신
+    lastDebounceTime = millis();
   }
 
   lastButtonState = buttonState;
@@ -273,7 +273,7 @@ void loop(){
 }
 
 void JsonParser(String payload) {
-  DynamicJsonDocument doc(payload.length()+3);  // 입력 데이터 크기에 따라 크기 조정
+  DynamicJsonDocument doc(payload.length()+3);  //데이터 크기에 따라 크기 조정
   deserializeJson(doc, payload);
 
   int id = doc["weather"][0]["id"];
